@@ -1,0 +1,11 @@
+################################################
+Author : Manish Pandey
+Project : Laravel Mailer
+Work : This Application Sends mails to huge amount of users
+################################################
+
+1.) I have create a console command first with name "SendMailToUsers" when we hit this console command it will get all the data from users table and send mail to all the users with help of queue.
+2.) after that i have created a Mailable with name "SendMail" and its view file in email folder with name "sendmails.blade.php".
+3.) After that i have create a job for sending emails with name "SendEmailToUsers".
+4.) After creating all the required files I called the job in command file SendMailToUsers and in SendMailToUsers it fetchs all the users from database and send them emails one by one.
+5.) I have created a supervisor file also in which i inform supervisor that which queue type i'm using and no of tries and sleeps. so if unfortunately any queue failed it automatically retries and send email to those users.  
