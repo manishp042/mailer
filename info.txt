@@ -8,4 +8,18 @@ Work : This Application Sends mails to huge amount of users
 2.) after that i have created a Mailable with name "SendMail" and its view file in email folder with name "sendmails.blade.php".
 3.) After that i have create a job for sending emails with name "SendEmailToUsers".
 4.) After creating all the required files I called the job in command file SendMailToUsers and in SendMailToUsers it fetchs all the users from database and send them emails one by one.
-5.) I have created a supervisor file also in which i inform supervisor that which queue type i'm using and no of tries and sleeps. so if unfortunately any queue failed it automatically retries and send email to those users.  
+5.) I have created a supervisor file also in which i inform supervisor that which queue type i'm using and no of tries and sleeps. so if unfortunately any queue failed it automatically retries and send email to those users. 
+
+########[program:mailer]
+########process_name=%(program_name)s_%(process_num)02d
+########command=php /var/www/html/mailer/artisan queue:work database --sleep=5 --tries=3 --daemon
+########autostart=true
+########autorestart=true
+########user=www-data
+########numprocs=6
+########redirect_stderr=true
+########stdout_logfile=/var/www/html/mailer/storage/logs/worker.log 
+
+6. I don't have mail stmp to check the process exceution time so I created a UserTableSeeder and use FAKER to insert dummy records into users table.
+7. And in the job file I insert queue user data into mailer_response table to check how much does it take to complete the task.
+

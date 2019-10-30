@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Mail;
 use App\Mail\SendMail;
+use App\Mailer_response;
 
 class SendEmailToUsers implements ShouldQueue
 {
@@ -35,6 +36,9 @@ class SendEmailToUsers implements ShouldQueue
     public function handle()
     {
 
-        Mail::to($this->user)->send(New SendMail());
-    }
+        //Mail::to($this->user)->send(New SendMail());
+        $mailer_response = New Mailer_response();
+        $add_record = $mailer_response->create(["email"=>$this->user]);
+        sleep(1);
+    }  
 }
