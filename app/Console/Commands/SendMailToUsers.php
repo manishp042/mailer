@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Jobs\SendEmailToUsers;
+use App\User;
 
 class SendMailToUsers extends Command
 {
@@ -35,7 +36,11 @@ class SendMailToUsers extends Command
      * @return mixed
      */
     public function handle()
-    {
-            dispatch(new SendEmailToUsers());   
+    {       
+         $user_obj = New User();
+         $users = $user_obj->all();
+         foreach($users as $user){
+              dispatch(new SendEmailToUsers($user));
+         }     
     }
 }
